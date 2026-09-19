@@ -1,0 +1,15 @@
+{
+  // The browser app, and the shared code it imports
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.client.tsbuildinfo",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/client/*"],
+      "@shared/*": ["./src/shared/*"]
+    }
+  },
+  "include": ["src/client", "src/shared"]
+}

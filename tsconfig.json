@@ -1,0 +1,12 @@
+{
+  // The browser app and the server are checked separately, so each sees only its own platform's
+  // types, and the shared code has to type-check on both. The paths here are for the shadcn CLI,
+  // which reads its aliases from this file.
+  "files": [],
+  "references": [{ "path": "./tsconfig.client.json" }, { "path": "./tsconfig.server.json" }],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/client/*"]
+    }
+  }
+}

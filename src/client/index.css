@@ -1,0 +1,99 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* shadcn's color tokens, mapped onto the app's stone and amber terminal palette */
+:root {
+  --font-mono: "Geist Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --background: #1c1917; /* stone-900 */
+  --foreground: #fbbf24; /* amber-400 */
+  --card: #1c1917;
+  --card-foreground: #fde68a; /* amber-200 */
+  --popover: #1c1917;
+  --popover-foreground: #fde68a;
+  --primary: #fbbf24;
+  --primary-foreground: #1c1917;
+  --secondary: #292524; /* stone-800 */
+  --secondary-foreground: #fde68a;
+  --muted: #292524;
+  --muted-foreground: #78716c; /* stone-500 */
+  --accent: #fbbf24;
+  --accent-foreground: #1c1917;
+  --destructive: #f87171; /* red-400 */
+  --border: #fbbf24;
+  --input: #57534e; /* stone-600 */
+  --ring: #fbbf24;
+  --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-mono;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Gold selections everywhere, matching the program editor, instead of the browser's blue */
+  ::selection {
+    @apply bg-amber-400/15;
+  }
+}
+
+/* Lucide's default stroke looks thin next to the text; bold buttons get bolder icons */
+.lucide {
+  stroke-width: 2.5;
+}
+.font-bold .lucide {
+  stroke-width: 3;
+}
+
+/* Diagonal hatching under the timeline's steps not reached yet */
+.hatched {
+  background-image: linear-gradient(
+    -45deg,
+    transparent 35%,
+    var(--color-stone-600) 35%,
+    var(--color-stone-600) 50%,
+    transparent 50%,
+    transparent 85%,
+    var(--color-stone-600) 85%,
+    var(--color-stone-600)
+  );
+  background-size: 6px 6px;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

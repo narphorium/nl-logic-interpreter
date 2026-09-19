@@ -1,0 +1,10 @@
+{
+  // The API server, the Vite config that loads it, and the shared code it imports
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.server.tsbuildinfo",
+    "lib": ["ESNext"],
+    "types": ["node"]
+  },
+  "include": ["src/server", "src/shared", "vite.config.ts"]
+}
