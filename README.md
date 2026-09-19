@@ -1,5 +1,7 @@
 # Natural Language Logic Interpreter
 
+https://github.com/user-attachments/assets/6222cadf-0734-4efe-9bb1-4fa3c4d01256
+
 A step-through logic interpreter for facts and rules written in plain English. It proves goals by SLD
 resolution, as Prolog does, but unification is done by [Jev](https://docs.typesafe.ai), TypeSafe's
 System One model, so sentences unify when they state the same fact, however they're worded: the goal
