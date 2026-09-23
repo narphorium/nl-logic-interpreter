@@ -6,5 +6,5 @@
     "lib": ["ESNext"],
     "types": ["node"]
   },
-  "include": ["src/server", "src/shared", "vite.config.ts"]
+  "include": ["src/server", "src/shared", "vite.config.ts", "vite.widget.config.ts"]
 }

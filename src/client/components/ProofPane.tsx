@@ -1,5 +1,6 @@
 // The proof pane: the solutions found up to the current step, the goals it works on, Jev's prediction
-// for its match, and the frames those goals came from.
+// for its match, and the frames those goals came from. `ProofView` draws it from a trace, so the
+// notebook widget can show it without the app's store.
 import { ListTree, Sparkles } from "lucide-react";
 import type React from "react";
 import { useMemo } from "react";
@@ -7,7 +8,8 @@ import { describeQuery, frameBindings, percent, plural, quote } from "@/describe
 import { cn } from "cn";
 import { actions, currentIndex, useInterpreter } from "@/store";
 import { solutionOf, type ExecutionStep, type Frame, type Solution } from "@shared/engine/NLEngine";
-import { queryVariables, showLiteral } from "@shared/engine/program";
+import { queryVariables, showLiteral, type Query } from "@shared/engine/program";
+import type { RunStatus } from "@shared/engine/trace";
 import type { JevUnification } from "@shared/engine/unify";
 import { NumberBadge } from "./controls";
 
@@ -16,6 +18,21 @@ export function ProofPane() {
   const current = useInterpreter((s) => currentIndex(s.view));
   const status = useInterpreter((s) => s.view.status);
   const query = useInterpreter((s) => s.view.query);
+  return <ProofView steps={steps} current={current} status={status} query={query} onGoToStep={actions.goToStep} />;
+}
+
+type ProofViewProps = {
+  steps: ExecutionStep[];
+  /** The index of the step on screen, or -1 before the first step */
+  current: number;
+  status: RunStatus | "idle";
+  query: Query | null;
+  onGoToStep: (index: number) => void;
+  /** Drawn under the cards, inside the pane's border */
+  footer?: React.ReactNode;
+};
+
+export function ProofView({ steps, current, status, query, onGoToStep, footer }: ProofViewProps) {
   const step: ExecutionStep | undefined = steps[current];
 
   const solutions = useMemo(
@@ -61,7 +78,7 @@ export function ProofPane() {
       </div>
 
       <div className="space-y-2 overflow-auto flex-1 p-2 pt-0 text-sm">
-        {solutions.length > 0 && <SolutionsCard solutions={solutions} verdict={verdict} current={current} />}
+        {solutions.length > 0 && <SolutionsCard solutions={solutions} verdict={verdict} current={current} onGoToStep={onGoToStep} />}
 
         {noSolutions && query && (
           <div className="p-2 border border-red-400 rounded-sm text-red-400">
@@ -78,6 +95,7 @@ export function ProofPane() {
           <FrameCard key={frame.id} frame={frame} variables={variables} />
         ))}
       </div>
+      {footer}
     </div>
   );
 }
@@ -96,7 +114,17 @@ function Card({ className, title, children }: { className: string; title: React.
 const ROW = "block w-full px-2 last:pb-2 text-left";
 
 // Each solution found so far, restating the query with its values. Clicking one goes to its step.
-function SolutionsCard({ solutions, verdict, current }: { solutions: (Solution & { index: number })[]; verdict: boolean; current: number }) {
+function SolutionsCard({
+  solutions,
+  verdict,
+  current,
+  onGoToStep,
+}: {
+  solutions: (Solution & { index: number })[];
+  verdict: boolean;
+  current: number;
+  onGoToStep: (index: number) => void;
+}) {
   const title = verdict ? (
     "YES"
   ) : (
@@ -111,7 +139,7 @@ function SolutionsCard({ solutions, verdict, current }: { solutions: (Solution &
         <button
           key={s.index}
           className={cn(ROW, "text-green-300", s.index === current ? "bg-green-500/20" : "hover:bg-green-500/10")}
-          onClick={() => actions.goToStep(s.index)}
+          onClick={() => onGoToStep(s.index)}
         >
           {s.answer}
         </button>

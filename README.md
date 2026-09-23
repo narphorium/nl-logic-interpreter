@@ -76,7 +76,7 @@ program aren't saved to its file.
 - [Writing programs](docs/writing-programs.md): facts, rules, and variables
 - [Asking questions](docs/asking-questions.md): plain-English questions, goals, and negation
 - [How unification works](docs/unification.md): matching sentences with Jev
-- [Run a query in a notebook](notebooks/nl-logic-run-query.ipynb): the engine on its own, without the UI.
+- [Run a query in a notebook](notebooks/nl-logic-run-query.ipynb): the engine on its own, with the proof pane as a widget to page through the proof (build it first with `pnpm build:widget`).
   It runs on Deno, so it needs the Deno Jupyter kernel (`deno jupyter --install`), and reads its keys
   from the same `.env`.
 

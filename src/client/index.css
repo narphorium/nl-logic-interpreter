@@ -4,8 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* shadcn's color tokens, mapped onto the app's stone and amber terminal palette */
-:root {
+/* shadcn's color tokens, mapped onto the app's stone and amber terminal palette. :host is for the
+   notebook widget, which renders in a shadow root. */
+:root,
+:host {
   --font-mono: "Geist Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --background: #1c1917; /* stone-900 */
   --foreground: #fbbf24; /* amber-400 */

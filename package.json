@@ -10,7 +10,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && pnpm build:widget",
+    "build:widget": "vite build --config vite.widget.config.ts",
     "preview": "vite preview",
     "test": "vitest run"
   },
